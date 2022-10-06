@@ -3,7 +3,6 @@ package com.svj.repository;
 import com.svj.entity.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -19,4 +18,15 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 //    @Query("FROM PRODUCT_TBL p WHERE p.price= :price")
 //    List<Product> getProductByPrice(@Param() double price);
     List<Product> getProductByPrice( double price);
+
+    // prefix + field + operator
+    List<Product> findByPriceIn(List<Double> prices);
+
+    List<Product> findByPriceBetween(Double minPrice, Double maxPrice);
+
+    List<Product> findByPriceGreaterThan(double price);
+
+    List<Product> findByPriceLessThan(double price);
+
+    List<Product> findByNameIgnoreCaseContaining(String name);
 }

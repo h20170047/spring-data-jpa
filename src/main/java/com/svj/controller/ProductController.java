@@ -2,6 +2,7 @@ package com.svj.controller;
 
 import com.svj.entity.Product;
 import com.svj.service.ProductService;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -59,5 +60,45 @@ public class ProductController {
     @DeleteMapping("/{id}")
     public void deleteProduct(@PathVariable int id){
         productService.deleteProduct(id);
+    }
+
+    @PostMapping("/price/search")
+    public List<Product> getProductsByMultiplePriceValues(@RequestBody List<Double> prices){
+        return productService.getProductsByMultiplePriceValues(prices);
+    }
+
+    @GetMapping("price/min/{minPrice}/max/{maxPrice}")
+    public List<Product> getProductsBetweenPriceRange(@PathVariable Double minPrice, @PathVariable Double maxPrice){
+        return productService.getProductsBetweenPriceRange(minPrice, maxPrice);
+    }
+
+    @GetMapping("/price/min/{price}")
+    public List<Product> getProductWithHigherPrice(@PathVariable double price){
+        return productService.getProductWithHigherPrice(price);
+    }
+
+    @GetMapping("/price/max/{price}")
+    public List<Product> getProductWithLowerPrice(@PathVariable Double price){
+        return productService.getProductWithLowerPrice(price);
+    }
+
+    @GetMapping("/name/like/{name}")
+    public List<Product> getProductsWithLike(@PathVariable String name){
+        return productService.getProductsWithLike(name);
+    }
+
+    @GetMapping("/sort/name/{fieldName}")
+    public List<Product> getProductsWithSorting(@PathVariable String fieldName){
+        return productService.getProductsWithSorting( fieldName);
+    }
+
+    @GetMapping("/page/offSet/{offSet}/limit/{limit}")
+    public Page<Product> getProductsWithPageResponse(@PathVariable Integer offSet, @PathVariable Integer limit){
+        return productService.getProductsWithPageResponse(offSet, limit);
+    }
+
+    @GetMapping("/pageAndSort/name/{fieldName}/offSet/{offSet}/limit/{limit}")
+    public List<Product> getProductsWithSortingAndPagination(@PathVariable String fieldName, @PathVariable Integer offSet, @PathVariable Integer limit){
+        return productService.getProductsWithSortingAndPagination(fieldName, offSet, limit);
     }
 }

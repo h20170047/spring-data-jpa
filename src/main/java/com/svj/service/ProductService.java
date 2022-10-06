@@ -2,6 +2,9 @@ package com.svj.service;
 
 import com.svj.entity.Product;
 import com.svj.repository.ProductRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -56,5 +59,46 @@ public class ProductService {
 
     public void deleteProduct(int id){
         productRepository.deleteById(id);
+    }
+
+    // Operator
+
+    public List<Product> getProductsByMultiplePriceValues(List<Double> prices){
+        return productRepository.findByPriceIn(prices);
+    }
+
+    public List<Product> getProductsBetweenPriceRange(Double minPrice, Double maxPrice){
+        return productRepository.findByPriceBetween(minPrice, maxPrice);
+    }
+
+    public List<Product> getProductWithHigherPrice(double price){
+        return productRepository.findByPriceGreaterThan(price);
+    }
+
+    public List<Product> getProductWithLowerPrice(double price){
+        return productRepository.findByPriceLessThan(price);
+    }
+
+
+    public List<Product> getProductsWithLike(String name){
+        return productRepository.findByNameIgnoreCaseContaining(name);
+    }
+
+    // sorting
+    public List<Product> getProductsWithSorting(String fieldName){
+        return productRepository.findAll( Sort.by(Sort.Direction.ASC, fieldName));
+    }
+
+    // pagination
+    public Page<Product> getProductsWithPageResponse(int offSet, int limit){
+        return productRepository.findAll(PageRequest.of(offSet, limit));
+    }
+
+    public List<Product> getProductsWithSortingAndPagination(String fieldName, int offset, int limit){
+        return productRepository
+                .findAll(
+                        PageRequest.of(offset, limit)
+                                .withSort(Sort.by(fieldName))
+                ).getContent();
     }
 }
