@@ -1,6 +1,7 @@
 package com.svj.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.envers.Audited;
@@ -21,6 +22,7 @@ import java.time.LocalDateTime;
 @Table(name = "PRODUCT_TBL")
 @Audited
 @EntityListeners(AuditingEntityListener.class)
+@Builder
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

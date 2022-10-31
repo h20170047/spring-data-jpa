@@ -29,3 +29,5 @@ To update app.yml file with encrypted value without copying from CLI, surround t
 mvn jasypt:encrypt -Djasypt.encryptor.password=svj -Djasypt.plugin.path="file:src/main/resources/application.yml"
 
 With EncryptorConfig, we can generate encrypted keys, and that can be saved in the app.yml. This isnt recommended. An alternate would be to use vaults or cloud security
+
+Adding E2E testing
