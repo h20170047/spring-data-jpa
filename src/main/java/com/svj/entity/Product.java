@@ -42,4 +42,11 @@ public class Product {
     @LastModifiedDate
 //    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime lastModifiedDate;
+
+    public Product(String name, int price, String desc, String type) {
+        this.name= name;
+        this.price= price;
+        this.description= desc;
+        this.productType= type;
+    }
 }
