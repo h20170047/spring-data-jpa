@@ -1,8 +1,12 @@
 package com.svj.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.svj.entity.Product;
 import com.svj.entity.RequestObj;
+import com.svj.exception.InvalidInput;
 import com.svj.service.ProductService;
+import io.micrometer.observation.Observation;
+import io.micrometer.observation.ObservationRegistry;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,14 +16,18 @@ import java.util.List;
 @RequestMapping("/products")
 public class ProductController {
     private ProductService productService;
-
+    private ObjectMapper objectMapper;
     public ProductController(ProductService productService){
         this.productService= productService;
+        objectMapper= new ObjectMapper();
     }
 
     @PostMapping
     public Product saveProduct(@RequestBody RequestObj product){
-        return productService.saveProduct(product.getPayload());
+        Product payload = objectMapper.convertValue(product.getPayload(), Product.class) ;
+        if(payload.getPrice()< 0)
+            throw new InvalidInput("Product price should not be negative");
+        return productService.saveProduct(payload);
     }
 
     @GetMapping
