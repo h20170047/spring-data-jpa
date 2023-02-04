@@ -12,11 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.util.List;
-import java.util.Random;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 @Service
 @Slf4j
@@ -45,14 +41,12 @@ public class ProductService {
 
     @Cacheable(cacheNames = "products")
     public List<Product> getProducts(){
-        log.info("ProductService:getProducts() connecting to Database");
         List<Product> products = productRepository.findAll();
         return products;
     }
 
     @Cacheable(key = "#id")
     public Product getProductById(int id){
-        log.info("ProductService:getProductById() connecting to Database");
         return productRepository.findById(id).get();
     }
 
@@ -76,7 +70,6 @@ public class ProductService {
     public Product updateProduct(int id, Product productRequest){
         // get product from db using id
         // update with new value getting from request
-        log.info("ProductService:updateProduct() connecting to Database");
         Product existingProduct= productRepository.findById(id).get();
         existingProduct.setName(productRequest.getName());
         existingProduct.setProductType(productRequest.getProductType());
