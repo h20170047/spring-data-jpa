@@ -1,6 +1,7 @@
 package com.svj.controller;
 
 import com.svj.entity.Product;
+import com.svj.entity.RequestObj;
 import com.svj.service.ProductService;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
@@ -17,8 +18,8 @@ public class ProductController {
     }
 
     @PostMapping
-    public Product saveProduct(@RequestBody Product product){
-        return productService.saveProduct(product);
+    public Product saveProduct(@RequestBody RequestObj product){
+        return productService.saveProduct(product.getPayload());
     }
 
     @GetMapping
