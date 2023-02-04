@@ -19,11 +19,11 @@ public class MetricsRegistryAdvice {
         this.registry= registry;
     }
 
-    @After(value = "execution(* com.svj.controller.ProductController.*(..))")
-    public void sendMetrics(JoinPoint joinPoint){
-        log.info("Application collecting metrics");
-        Observation.createNotStarted(joinPoint.getSignature().getName(), registry)
-                .observe(()->joinPoint.getArgs());
-        log.info("Application published the metrics");
-    }
+//    @After(value = "execution(* com.svj.controller.ProductController.*(..))")
+//    public void sendMetrics(JoinPoint joinPoint){
+//        log.info("Application collecting metrics");
+//        Observation.createNotStarted(joinPoint.getSignature().getName(), registry)
+//                .observe(()->joinPoint.getArgs());
+//        log.info("Application published the metrics");
+//    }
 }

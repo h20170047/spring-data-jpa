@@ -1,5 +1,6 @@
 package com.svj.service;
 
+import com.svj.annotation.LogRequestAndResponse;
 import com.svj.entity.Product;
 import com.svj.repository.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -46,6 +47,7 @@ public class ProductService {
     }
 
     @Cacheable(key = "#id")
+    @LogRequestAndResponse
     public Product getProductById(int id){
         return productRepository.findById(id).get();
     }
@@ -67,6 +69,7 @@ public class ProductService {
     }
 
     @CachePut(key = "#id")
+    @LogRequestAndResponse
     public Product updateProduct(int id, Product productRequest){
         // get product from db using id
         // update with new value getting from request

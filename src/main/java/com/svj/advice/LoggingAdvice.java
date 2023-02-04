@@ -35,11 +35,11 @@ public class LoggingAdvice {
     private void logPointCut(){
     }
 
-    @Before("logPointCut()")
-    public void logRequest(JoinPoint joinPoint) throws JsonProcessingException {
-        log.info("Class name {}, Method name {}", joinPoint.getTarget(), joinPoint.getSignature().getName());
-        log.info("Request Body {}", objectMapper.writeValueAsString(joinPoint.getArgs()));
-    }
+//    @Before("logPointCut()")
+//    public void logRequest(JoinPoint joinPoint) throws JsonProcessingException {
+//        log.info("Class name {}, Method name {}", joinPoint.getTarget(), joinPoint.getSignature().getName());
+//        log.info("Request Body {}", objectMapper.writeValueAsString(joinPoint.getArgs()));
+//    }
 
     @Before(value = "execution(* com.svj.controller.ProductController.saveProduct(..))")
     public void validateSavingData(JoinPoint joinPoint){
@@ -52,11 +52,11 @@ public class LoggingAdvice {
         }
     }
 
-//    @AfterReturning(value = "execution (* com.svj.controller.ProductController.*(..))", returning = "object")
-//    public void logResponse(JoinPoint joinPoint, Object object) throws JsonProcessingException {
-//        log.info("LoggingAdvice::logResponse Class name {}, Method name {}", joinPoint.getTarget(), joinPoint.getSignature().getName());
-//        log.info("LoggingAdvice::logResponse Response Body {}", objectMapper.writeValueAsString(object));
-//    }
+    @AfterReturning(value = "execution (* com.svj.controller.ProductController.*(..))", returning = "object")
+    public void logResponse(JoinPoint joinPoint, Object object) throws JsonProcessingException {
+        log.info("LoggingAdvice::logResponse Class name {}, Method name {}", joinPoint.getTarget(), joinPoint.getSignature().getName());
+        log.info("LoggingAdvice::logResponse Response Body {}", objectMapper.writeValueAsString(object));
+    }
 
     @After(value = "execution (* com.svj.controller.ProductController.*(..))")
     public void logResponse(JoinPoint joinPoint) throws JsonProcessingException {

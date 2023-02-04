@@ -1,6 +1,8 @@
 package com.svj.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.svj.annotation.LogRequestAndResponse;
+import com.svj.annotation.TrackExecutionTime;
 import com.svj.entity.Product;
 import com.svj.entity.RequestObj;
 import com.svj.exception.InvalidInput;
@@ -23,6 +25,8 @@ public class ProductController {
     }
 
     @PostMapping
+//    @LogRequestAndResponse
+    @TrackExecutionTime
     public Product saveProduct(@RequestBody RequestObj product){
         Product payload = objectMapper.convertValue(product.getPayload(), Product.class) ;
         if(payload.getPrice()< 0)
@@ -31,6 +35,7 @@ public class ProductController {
     }
 
     @GetMapping
+    @TrackExecutionTime
     public List<Product> getProducts(){
         return productService.getProducts();
     }
@@ -62,11 +67,13 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
+    @LogRequestAndResponse
     public Product updateProduct(@PathVariable int id, @RequestBody Product productRequest){
         return productService.updateProduct(id, productRequest);
     }
 
     @DeleteMapping("/{id}")
+    @TrackExecutionTime
     public void deleteProduct(@PathVariable int id){
         productService.deleteProduct(id);
     }
